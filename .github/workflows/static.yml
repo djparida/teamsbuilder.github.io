@@ -16,6 +16,8 @@ jobs:
         python-version: [3.8]
     steps:
     - uses: actions/checkout@v3
+    - name: set secret env
+      run: echo "My Secrest {{secrets.HOST}}" 
     - name: Set up Python ${{ matrix.python-version }}
     - name: Set Secret as env variables ${{ secrets.HOST }}
     - uses: actions/setup-python@v3
