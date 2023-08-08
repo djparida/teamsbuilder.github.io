@@ -8,28 +8,19 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  my_job:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.8]
     steps:
-    - uses: actions/checkout@v3
-    - name: set secret env
-      run: echo "My Secrest {{secrets.HOST}}" 
-    - name: Set up Python ${{ matrix.python-version }}
-    - name: Set Secret as env variables ${{ secrets.HOST }}
-    - uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Use Secret in a Step
+        run: echo ${{ secrets.MY_SECRET_KEY }}
+
   deploy:
-   needs: [build]
+   needs: [my_job]
    runs-on: ubuntu-latest
 
    steps: 
     - name: SSH Deploy
-      uses: appleboy/ssh-action@master
+      uses: ubuntu-boy/ssh-action@master
       with: 
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
