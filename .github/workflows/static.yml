@@ -1,0 +1,28 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Admin Teamsbuilders
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+  deploy:
+   needs: [build]
+   runs-on: ubuntu-latest
+
+   steps: 
+    - name: SSH Deploy
+      uses: appleboy/ssh-action@master
+      with: 
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sh /var/www/sh-test/deployment_admin.sh
