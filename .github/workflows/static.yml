@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use Secret in a Step
-        run: echo "my secrets=${{ secrets.MY_SECRET_KEY }}"
+        run: echo "my secrets=${{ secrets.HOST }} {{secrets}}"
 
   deploy:
    needs: [my_job]
